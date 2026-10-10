@@ -1,0 +1,34 @@
+﻿@model RegisterModel
+
+<h2 class="text-secondary mx-2">Welcome to the Registration page</h2>
+
+<form asp-action="Register" asp-controller="Account" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label>Name</label>
+        <input asp-for="Name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your Name">
+        <strong asp-validation-for="Name"></strong>
+    </div>
+
+    <div class="form-group mt-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your Email">
+       <strong asp-validation-for="Email"></strong>
+    </div>
+
+    <div class="form-group mt-3">
+        <label>Password</label>
+        <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <strong asp-validation-for="Password"></strong>
+    </div>
+
+    <div class="form-group mt-3">
+        <label>Confirm-Password</label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <strong asp-validation-for="ConfirmPassword"></strong>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary mt-4 justify-content-center">Submit</button>
+</form>
