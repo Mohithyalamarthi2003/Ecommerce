@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Ecommerce.Models;
 
 
 
@@ -13,6 +14,6 @@ namespace Ecommerce.Data
 
         }
 
-      
+      public DbSet <Product> Products { get; set; }
     }
 }

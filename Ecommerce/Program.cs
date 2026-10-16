@@ -19,7 +19,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddCookie();
+ 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +35,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

@@ -27,12 +27,16 @@ namespace Ecommerce.Controllers
             return View();
         }
 
+        //http get request for the register page 
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+       //http post request for the Register Page 
+        
         [HttpPost]
 
         public async Task <IActionResult> Register(RegisterModel model)
@@ -41,12 +45,24 @@ namespace Ecommerce.Controllers
             {
                 return View(model);
             }
+
+            //checking the user is existing or new user 
+
+            var existing = await _userManager.FindByEmailAsync(model.Email);
+
+            if (existing! == null)
+            {
+                ModelState.AddModelError("", "Email Id already exists please try login");
+                return View(model);
+            }
+
             var User = new ApplicationUser
             {
                 UserName = model.Email,
                 Email = model.Email,
                 
             };
+
 
             var result = await _userManager.CreateAsync(User, model.Password);
 
@@ -55,7 +71,7 @@ namespace Ecommerce.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error.Description);
             }
@@ -63,12 +79,16 @@ namespace Ecommerce.Controllers
             return View();
         }
 
+        //http get request for the login page
+
         [HttpGet]
 
         public IActionResult Login()
         {
             return View();
         }
+
+        //http post request for the login page 
 
         [HttpPost]
 
