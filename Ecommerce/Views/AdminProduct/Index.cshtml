@@ -1,1 +1,49 @@
-﻿<h2>The product has successfully added</h2>
+﻿@model IEnumerable<Product>
+
+<div class="container">
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+
+     <img src="@item.ImageUrl"
+     class="img-fluid rounded"
+     alt="@item.Name"
+     style="width: 100%; height: 200px; object-fit: contain; background-color: white;" />
+
+                    <div class="card-body">
+                        <h5 class="card-title fw-bolder">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+
+                        <p>
+                            <strong class="text-success">
+                                Available: @item.AvailableQuantity
+                            </strong>
+                        </p>
+
+                        <p>
+                            <strong class="text-warning">
+                                Price: @item.Price.ToString("C")
+                            </strong>
+                        </p>
+
+                        <button class="btn btn-primary">Add To Cart</button>
+                        <button class="btn btn-success">Buy Now</button>
+
+                        <a class="btn btn-warning btn-sm mx-2" asp-action="Edit" asp-route-id="@item.Id">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
