@@ -1,22 +1,57 @@
 ﻿@model LoginModel
-<h2>Welcome to the Login Page</h2>
 
-<form asp-action="Login" asp-controller="Account" method="post">
-  
+<div class="auth-wrapper">
+    <div class="auth-card">
 
-    <div class="form-group mt-3">
-        <label for="exampleInputEmail1">Email address</label>
-        <input asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <span asp-validation-for="Email" class="text-danger"></span>   
+        <div class="auth-icon">
+            <i class="bi bi-person-circle"></i>
+        </div>
+
+        <h2 class="auth-title">Welcome Back</h2>
+        <p class="auth-subtitle text-dark">Login to Continue Shopping</p>
+
+        <form asp-action="Login" asp-controller="Account" method="post">
+
+            <div asp-validation-summary="All" class="validation-message mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="auth-label text-dark">Email Address</label>
+
+                <div class="input-box">
+                    <i class="bi bi-envelope input-icon"></i>
+
+                    <input asp-for="Email"
+                           class="form-control auth-input"
+                           placeholder="Enter your email" />
+                </div>
+
+                <span asp-validation-for="Email" class="validation-message"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Password" class="auth-label text-dark">Password</label>
+
+                <div class="input-box">
+                    <i class="bi bi-lock input-icon"></i>
+
+                    <input asp-for="Password"
+                           type="password"
+                           class="form-control auth-input"
+                           placeholder="Enter your password" />
+                </div>
+
+                <span asp-validation-for="Password" class="validation-message"></span>
+            </div>
+
+            <button type="submit" class="btn auth-btn">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+            </button>
+
+            <p class="auth-footer text-dark">
+                Do not have an account?
+                <a asp-controller="Account" asp-action="Register">Create one</a>
+            </p>
+
+        </form>
     </div>
-
-    <div class="form-group mt-3">
-        <label for="exampleInputPassword1">Password</label>
-        <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-      <div asp-validation-summary="All" class="text-danger"></div>
- 
-    <button type="submit" class="btn btn-primary mt-3">Submit</button>
-</form>
+</div>

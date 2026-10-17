@@ -1,34 +1,86 @@
 ﻿@model RegisterModel
 
-<h2 class="text-secondary mx-2">Welcome to the Registration page</h2>
+<div class="auth-wrapper">
+    <div class="auth-card">
 
-<form asp-action="Register" asp-controller="Account" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="auth-icon">
+            <i class="bi bi-person-plus-fill"></i>
+        </div>
 
-    <div class="form-group">
-        <label>Name</label>
-        <input asp-for="Name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your Name">
-        <strong asp-validation-for="Name"></strong>
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle text-dark">Join Ecommerce-Cart and start shopping</p>
+
+        <form asp-action="Register" asp-controller="Account" method="post">
+
+            <div asp-validation-summary="All" class="validation-message mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="auth-label text-dark">Full Name</label>
+
+                <div class="input-box">
+                    <i class="bi bi-person input-icon"></i>
+
+                    <input asp-for="Name"
+                           class="form-control auth-input text-dark"
+                           placeholder="Enter your full name" />
+                </div>
+
+                <span asp-validation-for="Name" class="validation-message"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="auth-label text-dark">Email Address</label>
+
+                <div class="input-box">
+                    <i class="bi bi-envelope input-icon"></i>
+
+                    <input asp-for="Email"
+                           class="form-control auth-input text-dark"
+                           placeholder="Enter your email" />
+                </div>
+
+                <span asp-validation-for="Email" class="validation-message"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="auth-label text-dark">Password</label>
+
+                <div class="input-box">
+                    <i class="bi bi-lock input-icon"></i>
+
+                    <input asp-for="Password"
+                           type="password"
+                           class="form-control auth-input"
+                           placeholder="Create a password" />
+                </div>
+
+                <span asp-validation-for="Password" class="validation-message"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="ConfirmPassword" class="auth-label text-dark">Confirm Password</label>
+
+                <div class="input-box">
+                    <i class="bi bi-shield-lock input-icon"></i>
+
+                    <input asp-for="ConfirmPassword"
+                           type="password"
+                           class="form-control auth-input"
+                           placeholder="Confirm your password" />
+                </div>
+
+                <span asp-validation-for="ConfirmPassword" class="validation-message"></span>
+            </div>
+
+            <button type="submit" class="btn auth-btn text-dark">
+                <i class="bi bi-person-plus me-2"></i>Register
+            </button>
+
+            <p class="auth-footer text-dark">
+                Already have an account?
+                <a asp-controller="Account" asp-action="Login">Login here</a>
+            </p>
+
+        </form>
     </div>
-
-    <div class="form-group mt-3">
-        <label>Email</label>
-        <input asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your Email">
-       <strong asp-validation-for="Email"></strong>
-    </div>
-
-    <div class="form-group mt-3">
-        <label>Password</label>
-        <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        <strong asp-validation-for="Password"></strong>
-    </div>
-
-    <div class="form-group mt-3">
-        <label>Confirm-Password</label>
-        <input asp-for="ConfirmPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        <strong asp-validation-for="ConfirmPassword"></strong>
-    </div>
-
-
-    <button type="submit" class="btn btn-primary mt-4 justify-content-center">Submit</button>
-</form>
+</div>
