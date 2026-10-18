@@ -7,7 +7,7 @@
             <i class="bi bi-person-plus-fill"></i>
         </div>
 
-        <h2 class="auth-title">Create Account</h2>
+        <h2 class="auth-title text-dark fw-bolder mb-3">Create Account</h2>
         <p class="auth-subtitle text-dark">Join Ecommerce-Cart and start shopping</p>
 
         <form asp-action="Register" asp-controller="Account" method="post">
@@ -50,7 +50,7 @@
 
                     <input asp-for="Password"
                            type="password"
-                           class="form-control auth-input"
+                           class="form-control auth-input text-dark"
                            placeholder="Create a password" />
                 </div>
 
@@ -58,14 +58,14 @@
             </div>
 
             <div class="mb-4">
-                <label asp-for="ConfirmPassword" class="auth-label text-dark">Confirm Password</label>
+                <label asp-for="ConfirmPassword" class="auth-label text-dark text-dark">Confirm Password</label>
 
                 <div class="input-box">
                     <i class="bi bi-shield-lock input-icon"></i>
 
                     <input asp-for="ConfirmPassword"
                            type="password"
-                           class="form-control auth-input"
+                           class="form-control auth-input text-dark"
                            placeholder="Confirm your password" />
                 </div>
 

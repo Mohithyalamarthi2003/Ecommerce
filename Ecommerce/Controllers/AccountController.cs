@@ -1,33 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Ecommerce.Models;
-using Ecommerce.Data;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Identity;
-
-
+using Ecommerce.Data;
+using Ecommerce.Models;
 
 namespace Ecommerce.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
-            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
         public IActionResult Index()
         {
             return View();
         }
-
-        //http get request for the register page 
 
         [HttpGet]
         public IActionResult Register()
@@ -35,39 +29,34 @@ namespace Ecommerce.Controllers
             return View();
         }
 
-       //http post request for the Register Page 
-        
         [HttpPost]
-
-        public async Task <IActionResult> Register(RegisterModel model)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            //checking the user is existing or new user 
+            var existingUser = await _userManager.FindByEmailAsync(model.Email);
 
-            var existing = await _userManager.FindByEmailAsync(model.Email);
-
-            if (existing! == null)
+            if (existingUser != null)
             {
-                ModelState.AddModelError("", "Email Id already exists please try login");
+                ModelState.AddModelError("", "This email already exists. Please login instead.");
                 return View(model);
             }
 
-            var User = new ApplicationUser
+            var newUser = new ApplicationUser
             {
                 UserName = model.Email,
-                Email = model.Email,
-                
+                Email = model.Email
             };
 
+            var result = await _userManager.CreateAsync(newUser, model.Password);
 
-            var result = await _userManager.CreateAsync(User, model.Password);
-
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(newUser, "User");
+
                 return RedirectToAction("Login", "Account");
             }
 
@@ -76,43 +65,54 @@ namespace Ecommerce.Controllers
                 ModelState.AddModelError("", error.Description);
             }
 
-            return View();
+            return View(model);
         }
 
-        //http get request for the login page
-
         [HttpGet]
-
         public IActionResult Login()
         {
             return View();
         }
 
-        //http post request for the login page 
-
         [HttpPost]
-
-        public async Task <IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
-
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var result = await _signInManager.PasswordSignInAsync
-                 (
-                 model.Email,
-                 model.Password,
-                 false,
-                 false
-            );
-            if(result.Succeeded)
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
             {
-                return RedirectToAction("Privacy", "Home");
+                ModelState.AddModelError("", "Invalid email or password.");
+                return View(model);
             }
-            ModelState.AddModelError("", "Please Enter valid credentials");
-            return View();
+
+            var result = await _signInManager.PasswordSignInAsync(
+                user.UserName,
+                model.Password,
+                false,
+                false
+            );
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError("", "Invalid email or password.");
+            return View(model);
+       }
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
+
+
     }
+
+   
 }

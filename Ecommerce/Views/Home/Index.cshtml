@@ -225,12 +225,32 @@
             padding: 28px 20px;
         }
     }
+
+    .typing-cursor {
+    color: #facc15;
+    font-weight: 800;
+    animation: blinkCursor 0.8s step-end infinite;
+}
+
+@@keyframes blinkCursor {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
 </style>
 
+
+
 <div class="hero-section">
-    <h1 class="hero-title">
-        Welcome To The Best Shopping Website
-    </h1>
+
+  <h1 class="hero-title text-danger fw-bolder">
+    <span id="typingText"></span><span class="typing-cursor">|</span>
+</h1>
 
     <p class="hero-text">
         Discover a seamless shopping experience designed for you. From trending fashion
@@ -374,3 +394,21 @@
         </a>
     </div>
 </div>
+
+                <script>
+    const typingText = document.getElementById("typingText");
+    const message = "Welcome To The Best Shopping Website !";
+
+    let index = 0;
+
+    function typeLetter() {
+        if (index < message.length) {
+            typingText.textContent += message[index];
+            index++;
+        } else {
+            clearInterval(typingInterval);
+        }
+    }
+
+    const typingInterval = setInterval(typeLetter, 100);
+</script>

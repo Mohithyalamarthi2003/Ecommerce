@@ -282,6 +282,56 @@
         transform: translateY(0);
     }
 }
+footer span, footer div, footer {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal !important;
+}
+
+/* Responsive footer */
+footer {
+    width: 100%;
+    padding: 18px 0 !important;
+}
+
+footer span,
+footer div,
+footer {
+    overflow-wrap: anywhere;
+    white-space: normal !important;
+}
+
+.footer-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+}
+
+/* Desktop and laptop screens */
+@@media (min-width: 768px) {
+    footer {
+        padding: 22px 0 !important;
+    }
+
+    .footer-text {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+}
+
+/* Mobile screens */
+@@media (max-width: 576px) {
+    footer {
+        padding: 12px 0 !important;
+    }
+
+    .footer-text {
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+}
+
 </style>
 
 </head>
@@ -316,14 +366,14 @@
 
                     <li class="nav-item">
                         <a class="nav-link modern-link"
-                           asp-controller="Product" asp-action="Index">
+                           asp-controller="User" asp-action="Index">
                             <i class="bi bi-grid me-1"></i> Products
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link modern-link"
-                           asp-controller="Cart" asp-action="Index">
+                           asp-controller="AddToCart" asp-action="ViewCart">
                             <i class="bi bi-cart3 me-1"></i> Cart
                             <span class="cart-badge"></span>
                         </a>
@@ -342,6 +392,11 @@
                        asp-controller="Account" asp-action="Login">
                         <i class="bi bi-box-arrow-in-right me-1"></i> Login
                     </a>
+                    <a class="btn login-btn"
+                       asp-controller="Account" asp-action="Logout">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Logout 
+                    </a>
+                  
 
                     <a class="btn register-btn"
                        asp-controller="Account" asp-action="Register">
@@ -351,6 +406,9 @@
             </div>
 
         </div>
+      <div class="text-danger text-sm mr-1">
+   @User.Identity.Name
+</div>
     </nav>
 </header>
     <div class="container">
@@ -359,11 +417,22 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Ecommerce -All rights reserved by Developer Mohith <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+@* <footer class="border-top footer text-muted bg-light mt-5">
+    <div class="container">
+        <div class="text-center text-sm-start small">
+            <div class="footer-text">
+                © 2026 - Ecommerce - All rights reserved by Developer Mohith
+            </div>
+
+            <div class="mt-2">
+                <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
         </div>
-    </footer>
+    </div>
+</footer> *@
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
