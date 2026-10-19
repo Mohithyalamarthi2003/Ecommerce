@@ -357,35 +357,72 @@ footer {
 
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link modern-link active"
-                           asp-controller="Home" asp-action="Index">
-                            <i class="bi bi-house-door me-1"></i> Home
-                        </a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link modern-link"
-                           asp-controller="User" asp-action="Index">
-                            <i class="bi bi-grid me-1"></i> Products
-                        </a>
-                    </li>
+                        @if (User.IsInRole("Admin"))
+                            {
 
-                    <li class="nav-item">
-                        <a class="nav-link modern-link"
-                           asp-controller="AddToCart" asp-action="ViewCart">
-                            <i class="bi bi-cart3 me-1"></i> Cart
-                            <span class="cart-badge"></span>
-                        </a>
-                    </li>
+                                <li class="nav-item">
+                                    <a class="nav-link modern-link"
+                                    asp-controller="AdminProduct" asp-action="Create">
+                                        <i class="bi bi-plus-circle me-1"></i> Create Product
+                                    </a>
 
-                    <li class="nav-item">
-                        <a class="nav-link modern-link"
-                           asp-controller="Home" asp-action="Contact">
-                            <i class="bi bi-telephone me-1"></i> Contact
-                        </a>
-                    </li>
-                </ul>
+                                </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link modern-link"
+                                   asp-controller="AdminProduct" asp-action="Index">
+                                    <i class="bi bi-plus-circle me-1"></i> Update Product
+                                </a>
+
+                            </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link modern-link"
+                                    asp-controller="Complaint" asp-action="Index">
+                                        <i class="bi bi-chat-dots me-1"></i> Customer Complaints
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link modern-link active"
+                                    asp-controller="Home" asp-action="Index">
+                                        <i class="bi bi-house-door me-1"></i> Home
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link modern-link"
+                                    asp-controller="User" asp-action="Index">
+                                        <i class="bi bi-grid me-1"></i> Products
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link modern-link"
+                                    asp-controller="AddToCart" asp-action="ViewCart">
+                                        <i class="bi bi-cart3 me-1"></i> Cart
+                                        <span class="cart-badge"></span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link modern-link"
+                                    asp-controller="Home" asp-action="Contact">
+                                        <i class="bi bi-telephone me-1"></i> Contact
+                                    </a>
+                                </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link modern-link"
+                                   asp-controller="Home" asp-action="Complaint">
+                                    <i class="bi bi-chat-square-text me-1"></i> Complaint
+                                </a>
+                            </li>
+                            }
+                        </ul>
 
                 <div class="d-flex flex-column flex-lg-row gap-2">
                     <a class="btn login-btn"
@@ -398,10 +435,10 @@ footer {
                     </a>
                   
 
-                    <a class="btn register-btn"
+                    @* <a class="btn register-btn"
                        asp-controller="Account" asp-action="Register">
                         <i class="bi bi-person-plus me-1"></i> Register
-                    </a>
+                    </a> *@
                 </div>
             </div>
 

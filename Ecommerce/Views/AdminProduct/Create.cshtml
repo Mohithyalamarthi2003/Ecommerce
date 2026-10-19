@@ -1,41 +1,289 @@
 ﻿@model Product;
 
-<h2 class="text-primary m-0 text-black text-decoration-underline text-align-center">Welcome to the product registration page</h2>
+<div class="product-create-wrapper">
+    <div class="product-create-card">
 
+        <div class="product-create-header">
+            <div class="product-create-icon">
+                <i class="bi bi-box-seam-fill"></i>
+            </div>
 
-<div>
-
-    <form class="mt-3" asp-action="Create" method="post" asp-controller="AdminProduct" enctype="multipart/form-data">
-
-        <div class="form-group">
-            <label class="mb-2">Product Name</label>
-            <input asp-for="Name" class="form-control mb-4" placeholder="Enter Product Name">
+            <h2 class="product-create-title text-dark fw-bolder">Add New Product</h2>
+            <p class="product-create-subtitle text-dark">
+                Fill in the product details below to register it in your store.
+            </p>
         </div>
 
-        <div class="form-group">
-            <label class="mb-2">Product Description</label>
-            <input asp-for="Description" class="form-control mb-4" placeholder="Description">
-        </div>
+        <form class="product-create-form"
+              asp-action="Create"
+              method="post"
+              asp-controller="AdminProduct"
+              enctype="multipart/form-data">
 
-        <div class="form-group">
-            <label class="mb-2">Available Stock</label>
-            <input asp-for="AvailableQuantity" class="form-control mb-4">
-        </div>
+            <div class="form-group mb-4">
+                <label class="product-label text-dark" for="Name">
+                    <i class="bi bi-tag me-2 text-dark"></i>Product Name
+                </label>
 
-        <div class="form-group">
-            <label class="mb-2">Price</label>
-            <input asp-for="Price" class="form-control mb-4">
-        </div>
+                <div class="input-box">
+                    <i class="bi bi-pencil input-icon"></i>
+                    <input asp-for="Name"
+                           id="Name"
+                           class="form-control product-input text-dark"
+                           placeholder="Enter product name" />
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label class="mb-2">Choose an Product image</label>
-            <input asp-for="Image" type="file" />
-        </div>
+            <div class="form-group mb-4">
+                <label class="product-label text-dark" for="Description">
+                    <i class="bi bi-card-text me-2"></i>Product Description
+                </label>
 
-        <button type="submit" class="btn btn-primary mt-4">Create</button>
+                <div class="input-box">
+                    <i class="bi bi-align-left input-icon textarea-icon text-dark"></i>
+                    <textarea asp-for="Description"
+                              id="Description"
+                              class="form-control product-input product-textarea text-dark"
+                              placeholder="Write a short description about this product"
+                              rows="4"></textarea>
+                </div>
+            </div>
 
-    </form>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="product-label text-dark" for="AvailableQuantity">
+                            <i class="bi bi-boxes text-dark me-2"></i>Available Stock
+                        </label>
 
+                        <div class="input-box">
+                            <i class="bi bi-stack input-icon"></i>
+                            <input asp-for="AvailableQuantity"
+                                   id="AvailableQuantity"
+                                   class="form-control product-input text-dark"
+                                   placeholder="Enter available quantity" />
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-md-6">
+                    <div class="form-group mb-4">
+                        <label class="product-label text-dark" for="Price">
+                            <i class="bi bi-currency-dollar text-dark me-2"></i>Price
+                        </label>
+
+                        <div class="input-box">
+                            <i class="bi bi-cash-coin input-icon"></i>
+                            <input asp-for="Price"
+                                   id="Price"
+                                   class="form-control product-input text-dark"
+                                   placeholder="Enter product price" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="product-label text-dark fw-bolder">
+                    <i class="bi bi-image me-2 text-dark fw-bolder"></i>Choose a Product Image
+                </label>
+
+                <div class="image-upload-box">
+                    <i class="bi bi-cloud-arrow-up upload-icon"></i>
+                    <p class="upload-text mb-1">Click to choose an image</p>
+                    <p class="upload-subtext mb-0">PNG, JPG or JPEG recommended</p>
+
+                    <input asp-for="Image"
+                           type="file"
+                           class="image-input" />
+                </div>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn product-create-btn">
+                    <i class="bi bi-plus-circle me-2"></i>Create Product
+                </button>
+            </div>
+
+        </form>
+    </div>
 </div>
 
+<style>
+    .product-create-wrapper {
+        min-height: calc(100vh - 190px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 15px;
+    }
+
+    .product-create-card {
+        width: 100%;
+        max-width: 780px;
+        padding: 45px 40px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+        animation: productFadeIn 0.6s ease;
+    }
+
+    .product-create-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .product-create-icon {
+        width: 82px;
+        height: 82px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 2.1rem;
+        color: #fff;
+        background: linear-gradient(135deg, #7c3aed, #ec4899);
+        box-shadow: 0 15px 35px rgba(124, 58, 237, 0.45);
+    }
+
+    .product-create-title {
+        color: #fff;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .product-create-subtitle {
+        color: #cbd5e1;
+        margin-bottom: 0;
+    }
+
+    .product-label {
+        color: #e2e8f0;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .input-box {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 14px;
+        color: #a78bfa;
+        z-index: 5;
+    }
+
+    .textarea-icon {
+        top: 16px;
+    }
+
+    .product-input {
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        border-radius: 14px;
+        padding: 12px 15px 12px 45px;
+        transition: all 0.25s ease;
+    }
+
+    .product-input::placeholder {
+        color: #94a3b8;
+    }
+
+    .product-input:focus {
+        background-color: rgba(255, 255, 255, 0.12);
+        border-color: #7c3aed;
+        box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.25);
+        color: #fff;
+        outline: none;
+    }
+
+    .product-textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .image-upload-box {
+        position: relative;
+        text-align: center;
+        padding: 32px 20px;
+        border: 2px dashed rgba(167, 139, 250, 0.55);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.06);
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .image-upload-box:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #ec4899;
+        transform: translateY(-2px);
+    }
+
+    .upload-icon {
+        font-size: 2.2rem;
+        color: #a78bfa;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .upload-text {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .upload-subtext {
+        color: #94a3b8;
+        font-size: 0.9rem;
+    }
+
+    .image-input {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .product-create-btn {
+        padding: 14px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(90deg, #7c3aed, #ec4899);
+        transition: all 0.3s ease;
+    }
+
+    .product-create-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(236, 72, 153, 0.4);
+        color: #fff;
+    }
+
+    @@keyframes productFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .product-create-card {
+            padding: 30px 20px;
+        }
+    }
+</style>

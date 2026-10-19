@@ -39,5 +39,12 @@ namespace Ecommerce.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task <IActionResult> Complaint()
+        {
+            return View();
+        }
     }
 }

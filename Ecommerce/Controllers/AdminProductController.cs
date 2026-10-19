@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Ecommerce.Models;
 using Microsoft.Identity.Client;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ecommerce.Controllers
 {
@@ -17,7 +18,7 @@ namespace Ecommerce.Controllers
             _context = context;
             _env = env;
         }
-
+        [Authorize(Roles ="Admin")]
         [HttpGet]
 
         public IActionResult Create()
