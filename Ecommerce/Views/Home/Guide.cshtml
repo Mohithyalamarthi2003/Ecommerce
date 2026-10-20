@@ -1,0 +1,238 @@
+﻿@{
+    ViewData["Title"] = "Website Guide";
+}
+
+<style>
+    .guide-page {
+        padding: 35px 0 55px;
+        color: #e2e8f0;
+    }
+
+    .guide-hero {
+        text-align: center;
+        padding: 45px 25px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #7c3aed, #ec4899);
+        box-shadow: 0 18px 40px rgba(124, 58, 237, 0.35);
+        margin-bottom: 28px;
+    }
+
+    .guide-hero h1 {
+        color: #ffffff;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .guide-hero p {
+        color: #f8fafc;
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .guide-card {
+        background: rgba(15, 23, 42, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 18px;
+        padding: 28px;
+        margin-bottom: 24px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.22);
+    }
+
+    .guide-card h2 {
+        color: #facc15;
+        font-weight: 800;
+        margin-bottom: 15px;
+    }
+
+    .guide-card h3 {
+        color: #ffffff;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+
+    .guide-card p {
+        color: #cbd5e1;
+    }
+
+    .account-card {
+        height: 100%;
+        padding: 22px;
+        border-radius: 15px;
+    }
+
+    .admin-account {
+        background: rgba(124, 58, 237, 0.18);
+        border-left: 5px solid #a78bfa;
+    }
+
+    .user-account {
+        background: rgba(16, 185, 129, 0.14);
+        border-left: 5px solid #34d399;
+    }
+
+    .account-card p {
+        margin-bottom: 8px;
+    }
+
+    .guide-note {
+        color: #facc15 !important;
+        font-size: 0.92rem;
+        margin-top: 15px;
+        margin-bottom: 0 !important;
+    }
+
+    .guide-steps {
+        padding-left: 22px;
+        margin-bottom: 0;
+    }
+
+    .guide-steps li {
+        color: #cbd5e1;
+        margin-bottom: 12px;
+        padding-left: 5px;
+    }
+
+    .page-box {
+        height: 100%;
+        padding: 20px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .page-box:hover {
+        transform: translateY(-5px);
+        border-color: #a78bfa;
+    }
+
+    .page-box h3 {
+        color: #facc15;
+    }
+
+    @@media (max-width: 576px) {
+        .guide-page {
+            padding-top: 20px;
+        }
+
+        .guide-hero {
+            padding: 35px 18px;
+        }
+
+        .guide-card {
+            padding: 22px 18px;
+        }
+    }
+</style>
+
+<div class="guide-page">
+
+    <section class="guide-hero">
+        <h1><i class="bi bi-book-half me-2"></i>Website User Guide</h1>
+        <p>Learn how to use EcommerceCart as an admin or customer.</p>
+    </section>
+
+    <section class="guide-card">
+        <h2><i class="bi bi-person-badge me-2"></i>Demo Login Credentials</h2>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="account-card admin-account">
+                    <h3><i class="bi bi-shield-lock me-2"></i>Admin Account</h3>
+                    <p><strong>Email:</strong> admin@gmail.com</p>
+                    <p><strong>Password:</strong> 123456</p>
+                    <p class="guide-note">This account is for demo purposes. Admin registration is restricted.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="account-card user-account">
+                    <h3><i class="bi bi-person me-2"></i>User Account</h3>
+                    <p><strong>Email:</strong> user@gmail.com</p>
+                    <p><strong>Password:</strong> 123456</p>
+                    <p class="guide-note">You can also create a new user account from the Register page.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="guide-card">
+        <h2><i class="bi bi-gear-fill me-2"></i>Admin Guide</h2>
+
+        <ol class="guide-steps">
+            <li>Log in using the admin email and password.</li>
+            <li>Click <strong>Create Product</strong> to add a new product.</li>
+            <li>Click <strong>Update Product</strong> to edit existing products.</li>
+            <li>Products added or updated by the admin are displayed on the user Products page.</li>
+            <li>Click <strong>Customer Complaints</strong> to view user complaints.</li>
+            <li>Update the complaint status, for example Pending, In Progress, or Resolved.</li>
+        </ol>
+    </section>
+
+    <section class="guide-card">
+        <h2><i class="bi bi-person-check-fill me-2"></i>User Guide</h2>
+
+        <ol class="guide-steps">
+            <li>Log in with the demo user account or register a new account.</li>
+            <li>To register, open the Login page and click the Register link at the bottom.</li>
+            <li>Browse available products from the Products page.</li>
+            <li>You must be logged in before you can add products to the cart.</li>
+            <li>Open Cart to view selected products, quantities, and total price.</li>
+            <li>Update quantities or remove products from the cart when needed.</li>
+            <li>Your cart is individual and depends on the currently logged-in account.</li>
+            <li>Use the Complaint page to raise a complaint.</li>
+            <li>View the updated complaint status after the admin responds.</li>
+            <li>Click Logout when you finish using the website.</li>
+        </ol>
+    </section>
+
+    <section class="guide-card">
+        <h2><i class="bi bi-map-fill me-2"></i>Important Pages</h2>
+
+        <div class="row g-3">
+            <div class="col-md-4 col-sm-6">
+                <div class="page-box">
+                    <h3>Login</h3>
+                    <p>Log in using an admin or user account.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="page-box">
+                    <h3>Register</h3>
+                    <p>Create a new user account. Admin account creation is restricted.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="page-box">
+                    <h3>Products</h3>
+                    <p>Browse the products created and maintained by the admin.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="page-box">
+                    <h3>Cart</h3>
+                    <p>View products, update quantities, remove items, and see the total price.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="page-box">
+                    <h3>Complaint</h3>
+                    <p>Submit a complaint and track its updated status.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="page-box">
+                    <h3>Contact</h3>
+                    <p>View your contact and support details.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

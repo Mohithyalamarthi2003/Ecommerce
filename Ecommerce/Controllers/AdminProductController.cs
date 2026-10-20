@@ -187,6 +187,14 @@ namespace Ecommerce.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+        [HttpGet]
+
+        public async Task <IActionResult> Complaint()
+        {
+            var complaints = await _context.Complaints.ToListAsync();
+            return View(complaints);
+        }
     }
     }
 

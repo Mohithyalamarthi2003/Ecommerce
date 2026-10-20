@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Complaint>
+
+<h1>Welcome To complaints section</h1>
+
+<table class="table border-1">
+
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Problem Title</th>
+            <th>Problem Description</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var complaint in Model)
+        {
+            <tr>
+                <td>@complaint.Email</td>
+                <td>@complaint.Subject</td>
+                <td>@complaint.Description</td>
+                <td>@complaint.CreatedAt.ToString("dd-MM-yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

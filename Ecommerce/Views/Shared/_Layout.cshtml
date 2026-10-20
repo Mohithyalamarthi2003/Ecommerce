@@ -282,60 +282,215 @@
         transform: translateY(0);
     }
 }
-footer span, footer div, footer {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal !important;
-}
 
-/* Responsive footer */
-footer {
-    width: 100%;
-    padding: 18px 0 !important;
-}
+            .site-footer {
+                width: 100%;
+                margin-top: 40px;
+                color: #cbd5e1;
+                background: #0f172a;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
 
-footer span,
-footer div,
-footer {
-    overflow-wrap: anywhere;
-    white-space: normal !important;
-}
+            .footer-content {
+                display: grid;
+                grid-template-columns: 1.5fr 1fr 1.2fr;
+                gap: 45px;
+                padding: 45px 0 35px;
+            }
 
-.footer-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    white-space: normal !important;
-    overflow-wrap: anywhere;
-}
+            .footer-brand,
+            .footer-links,
+            .footer-contact {
+                min-width: 0;
+            }
 
-/* Desktop and laptop screens */
-@@media (min-width: 768px) {
-    footer {
-        padding: 22px 0 !important;
-    }
+            .footer-logo {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 14px;
+                color: #ffffff;
+                font-size: 1.35rem;
+                font-weight: 800;
+                text-decoration: none;
+            }
 
-    .footer-text {
-        font-size: 1rem;
-        line-height: 1.7;
-    }
-}
+                .footer-logo i {
+                    color: #ec4899;
+                    font-size: 1.5rem;
+                }
 
-/* Mobile screens */
-@@media (max-width: 576px) {
-    footer {
-        padding: 12px 0 !important;
-    }
+                .footer-logo span {
+                    background: linear-gradient(90deg, #ec4899, #7c3aed);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    color: transparent;
+                }
 
-    .footer-text {
-        font-size: 0.875rem;
-        line-height: 1.5;
-    }
-}
+            .footer-brand p {
+                max-width: 360px;
+                margin: 0;
+                color: #94a3b8;
+                line-height: 1.7;
+            }
+
+            .footer-links h6,
+            .footer-contact h6 {
+                margin-bottom: 16px;
+                color: #ffffff;
+                font-size: 1rem;
+                font-weight: 700;
+            }
+
+            .footer-links {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+                .footer-links a {
+                    width: fit-content;
+                    color: #cbd5e1;
+                    text-decoration: none;
+                    transition: color 0.2s ease, transform 0.2s ease;
+                }
+
+                    .footer-links a:hover {
+                        color: #facc15;
+                        transform: translateX(4px);
+                    }
+
+                .footer-links i,
+                .footer-contact i {
+                    margin-right: 7px;
+                    color: #a78bfa;
+                }
+
+            .footer-contact p {
+                margin-bottom: 12px;
+                color: #94a3b8;
+                line-height: 1.6;
+                overflow-wrap: anywhere;
+            }
+
+            .footer-bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+                padding: 20px 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                color: #94a3b8;
+                font-size: 0.9rem;
+            }
+
+                .footer-bottom span {
+                    overflow-wrap: anywhere;
+                }
+
+                .footer-bottom a {
+                    flex-shrink: 0;
+                    color: #facc15;
+                    font-weight: 600;
+                    text-decoration: none;
+                }
+
+                    .footer-bottom a:hover {
+                        text-decoration: underline;
+                    }
+
+            @@media (max-width: 991px) {
+                .footer-content {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 35px;
+                }
+
+                .footer-brand {
+                    grid-column: 1 / -1;
+                }
+
+                    .footer-brand p {
+                        max-width: 600px;
+                    }
+            }
+
+            @@media (max-width: 576px) {
+                .site-footer {
+                    margin-top: 25px;
+                }
+
+                .footer-content {
+                    grid-template-columns: 1fr;
+                    gap: 28px;
+                    padding: 32px 0 25px;
+                    text-align: center;
+                }
+
+                .footer-brand {
+                    grid-column: auto;
+                }
+
+                .footer-logo {
+                    justify-content: center;
+                }
+
+                .footer-brand p {
+                    margin: 0 auto;
+                }
+
+                .footer-links {
+                    align-items: center;
+                }
+
+                /* .footer-contact p {
+                    margin-bottom: 0px;
+                } */
+
+                .footer-bottom {
+                    flex-direction: column;
+                    justify-content: center;
+                    padding: 16px 0;
+                    text-align: center;
+                    /* line-height: 1.6; */
+                }
+            }
+
+            html,
+            body {
+                width: 100%;
+                min-height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            body {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow-x: hidden;
+            }
+
+            main {
+                flex: 1 0 auto;
+            }
+
+            .site-footer {
+                width: 100%;
+                margin: 0 !important;
+                margin-top: auto !important;
+                flex-shrink: 0;
+            }
+
+                .site-footer p:last-child,
+                .site-footer div:last-child,
+                .site-footer span:last-child {
+                    margin-bottom: 0 !important;
+                }
 
 </style>
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
    <header class="sticky-top">
     <nav class="navbar navbar-expand-lg modern-navbar py-3">
         <div class="container">
@@ -379,7 +534,7 @@ footer {
 
                                 <li class="nav-item">
                                     <a class="nav-link modern-link"
-                                    asp-controller="Complaint" asp-action="Index">
+                                   asp-controller="AdminProduct" asp-action="Complaint">
                                         <i class="bi bi-chat-dots me-1"></i> Customer Complaints
                                     </a>
                                 </li>
@@ -424,16 +579,25 @@ footer {
                             }
                         </ul>
 
-                <div class="d-flex flex-column flex-lg-row gap-2">
-                    <a class="btn login-btn"
-                       asp-controller="Account" asp-action="Login">
-                        <i class="bi bi-box-arrow-in-right me-1"></i> Login
-                    </a>
-                    <a class="btn login-btn"
-                       asp-controller="Account" asp-action="Logout">
-                        <i class="bi bi-box-arrow-in-right me-1"></i> Logout 
-                    </a>
-                  
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="text-success fw-bolder text-decoration-underline text-sm mr-1">
+                            @User.Identity.Name
+                        </div>
+                        <a class="btn login-btn ml-5"
+                           asp-controller="Account"
+                           asp-action="Logout">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Logout
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn login-btn"
+                           asp-controller="Account"
+                           asp-action="Login">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+                        </a>
+                    }
 
                     @* <a class="btn register-btn"
                        asp-controller="Account" asp-action="Register">
@@ -443,31 +607,77 @@ footer {
             </div>
 
         </div>
-      <div class="text-danger text-sm mr-1">
-   @User.Identity.Name
-</div>
+      
     </nav>
 </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+<main role="main" class="flex-grow-1">
+    <div class="container py-4">
+        @RenderBody()
     </div>
+</main>
 
-@* <footer class="border-top footer text-muted bg-light mt-5">
+<footer class="site-footer mt-auto">
     <div class="container">
-        <div class="text-center text-sm-start small">
-            <div class="footer-text">
-                © 2026 - Ecommerce - All rights reserved by Developer Mohith
+        <div class="footer-content">
+
+            <div class="footer-brand">
+                <a class="footer-logo"
+                   asp-controller="Home"
+                   asp-action="Index">
+                    <i class="bi bi-bag-heart-fill"></i>
+                    Ecommerce<span>Cart</span>
+                </a>
+
+                <p>
+                    Browse products, manage your cart, and get support whenever you need it.
+                </p>
             </div>
 
-            <div class="mt-2">
-                <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer-links">
+                <h6>Quick Links</h6>
+
+                <a asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-house-door"></i> Home
+                </a>
+
+                <a asp-controller="User" asp-action="Index">
+                    <i class="bi bi-grid"></i> Products
+                </a>
+
+                <a asp-controller="Home" asp-action="Contact">
+                    <i class="bi bi-telephone"></i> Contact
+                </a>
+
+                <a asp-controller="Home" asp-action="Guide">
+                    <i class="bi bi-book"></i> Guide
+                </a>
             </div>
+
+            <div class="footer-contact">
+                <h6>Need Help?</h6>
+
+                <p>
+                    <i class="bi bi-envelope"></i>
+                    support@ecommercecart.com
+                </p>
+
+                <p>
+                    <i class="bi bi-chat-dots"></i>
+                    Raise a complaint from your account.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2026 EcommerceCart. All rights reserved by Developer Mohith.</span>
+
+            <a asp-controller="Home" asp-action="Privacy">
+                Privacy Policy
+            </a>
         </div>
     </div>
-</footer> *@
-
+</footer>
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

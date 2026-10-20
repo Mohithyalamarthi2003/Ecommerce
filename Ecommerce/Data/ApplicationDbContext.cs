@@ -16,5 +16,6 @@ namespace Ecommerce.Data
 
       public DbSet <Product> Products { get; set; }
       public DbSet <CartItem>CartItems { get; set; }
+      public DbSet <Complaint>Complaints { get; set; }
     }
 }

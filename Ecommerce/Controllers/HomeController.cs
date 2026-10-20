@@ -46,5 +46,25 @@ namespace Ecommerce.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+
+        public async Task <IActionResult> Complaint(Complaint model)
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if(userId==null)
+            {
+                return NotFound();
+            }
+            model.CreatedAt = DateTime.Now;
+            _context.Complaints.Add(model);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index","Home");
+        }
+
+        public IActionResult Guide()
+        {
+            return View();
+        }
     }
 }
