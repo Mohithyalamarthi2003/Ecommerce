@@ -46,7 +46,7 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider
         .GetRequiredService<UserManager<ApplicationUser>>();
 
-    var email = "mohith.engineer@gmail.com";
+    var email = "admin@gmail.com";
 
     var user = await userManager.FindByEmailAsync(email);
 

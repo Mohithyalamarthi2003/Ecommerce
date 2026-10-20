@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Ecommerce.Models;
+using Ecommerce.Controllers;
 
 
 

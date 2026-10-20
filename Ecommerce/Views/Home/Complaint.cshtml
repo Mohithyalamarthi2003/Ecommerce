@@ -1,254 +1,65 @@
-﻿@model Complaint;
+﻿@model IEnumerable<Ecommerce.Models.Complaint>
 
-<div class="complaint-wrapper">
-    <div class="complaint-card">
-
-        <div class="complaint-header">
-            <div class="complaint-icon">
-                <i class="bi bi-chat-square-text-fill"></i>
-            </div>
-
-            <h2 class="complaint-title text-dark fw-bolder">Submit a Complaint</h2>
-            <p class="complaint-subtitle text-dark">
-                Tell us what went wrong. Our team will review your complaint and contact you.
-            </p>
-        </div>
-
-        <form asp-controller="Home"
-              asp-action="Complaint"
-              method="post"
-              class="complaint-form">
-
-            <div class="row">
-                @* <div class="col-md-6">
-                    <div class="form-group mb-4">
-                        <label class="complaint-label" asp-for="Name">
-                            <i class="bi bi-person me-2"></i>Your Name
-                        </label>
-
-                        <div class="input-box">
-                            <i class="bi bi-person-circle input-icon"></i>
-                            <input asp-for="Name"
-                                   class="form-control complaint-input"
-                                   placeholder="Enter your full name" />
-                        </div>
-
-                        <span asp-validation-for="Name" class="validation-message"></span>
-                    </div>
-                </div> *@
-
-                <div class="col-md-6">
-                    <div class="form-group mb-4">
-                        <label class="complaint-label text-dark" asp-for="Email">
-                            <i class="bi bi-envelope me-2 text-dark"></i>Email Address
-                        </label>
-
-                        <div class="input-box">
-                            <i class="bi bi-envelope-fill input-icon"></i>
-                            <input asp-for="Email"
-                                   type="email"
-                                   class="form-control complaint-input text-dark"
-                                   placeholder="Enter your email address" />
-                        </div>
-
-                        <span asp-validation-for="Email" class="validation-message"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group mb-4">
-                <label class="complaint-label text-dark" asp-for="Subject">
-                    <i class="bi bi-tag me-2 text-dark"></i>Complaint Subject
-                </label>
-
-                <div class="input-box">
-                    <i class="bi bi-chat-left-text input-icon"></i>
-                    <input asp-for="Subject"
-                           class="form-control complaint-input text-dark"
-                           placeholder="Example: Late delivery / Damaged product" />
-                </div>
-
-                <span asp-validation-for="Subject" class="validation-message"></span>
-            </div>
-
-            <div class="form-group mb-4">
-                <label class="complaint-label text-dark" asp-for="Description">
-                    <i class="bi bi-card-text me-2 text-dark"></i>Describe Your Complaint
-                </label>
-
-                <div class="input-box">
-                    <i class="bi bi-align-left input-icon textarea-icon"></i>
-                    <textarea asp-for="Description"
-                              class="form-control complaint-input complaint-textarea text-dark"
-                              rows="6"
-                              placeholder="Please explain your issue clearly, including order number if available"></textarea>
-                </div>
-
-                <span asp-validation-for="Description" class="validation-message"></span>
-            </div>
-
-            <div class="d-grid">
-                <button type="submit" class="btn complaint-submit-btn">
-                    <i class="bi bi-send-fill me-2"></i>Submit Complaint
-                </button>
-            </div>
-
-        </form>
-    </div>
-</div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+@{
+    ViewData["Title"] = "My Complaints";
 }
 
-<style>
-    .complaint-wrapper {
-        min-height: calc(100vh - 190px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px 15px;
+<div class="container py-4">
+
+    <h2 class="mb-4">My Complaints</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Description</th>
+                        <th>Email</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var complaint in Model)
+                    {
+                        <tr>
+                            <td>@complaint.Subject</td>
+                            <td>@complaint.Description</td>
+                            <td>@complaint.Email</td>
+                            <td>@complaint.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")</td>
+                        </tr>
+
+                    
+                    }
+                    <tr>
+                        <div>
+            
+        </div>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form asp-action="NewComplaint" asp-controller="Home">
+            <button class="btn btn-primary">Register a Complaint</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            You have not raised any complaints yet.
+        </div>
+
+        <br/>
+        <br/>
+
+        <div>
+            <form asp-action="NewComplaint" asp-controller="Home">
+            <button class="btn btn-primary">Register a Complaint</button>
+            </form>
+        </div>
     }
 
-    .complaint-card {
-        width: 100%;
-        max-width: 760px;
-        padding: 45px 40px;
-        border-radius: 28px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        backdrop-filter: blur(20px);
-        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
-        animation: complaintFadeIn 0.6s ease;
-    }
-
-    .complaint-header {
-        text-align: center;
-        margin-bottom: 35px;
-    }
-
-    .complaint-icon {
-        width: 82px;
-        height: 82px;
-        margin: 0 auto 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        font-size: 2.1rem;
-        color: #fff;
-        background: linear-gradient(135deg, #ef4444, #ec4899);
-        box-shadow: 0 15px 35px rgba(239, 68, 68, 0.45);
-    }
-
-    .complaint-title {
-        color: #fff;
-        font-weight: 800;
-        margin-bottom: 8px;
-    }
-
-    .complaint-subtitle {
-        color: #cbd5e1;
-        margin-bottom: 0;
-    }
-
-    .complaint-label {
-        color: #e2e8f0;
-        font-weight: 600;
-        margin-bottom: 8px;
-        display: block;
-    }
-
-    .input-box {
-        position: relative;
-    }
-
-    .input-icon {
-        position: absolute;
-        left: 16px;
-        top: 14px;
-        color: #fca5a5;
-        z-index: 5;
-    }
-
-    .textarea-icon {
-        top: 16px;
-    }
-
-    .complaint-input {
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #fff;
-        border-radius: 14px;
-        padding: 12px 15px 12px 45px;
-        transition: all 0.25s ease;
-    }
-
-    .complaint-input::placeholder {
-        color: #94a3b8;
-    }
-
-    .complaint-input:focus {
-        background-color: rgba(255, 255, 255, 0.12);
-        border-color: #ef4444;
-        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25);
-        color: #fff;
-        outline: none;
-    }
-
-    .complaint-textarea {
-        resize: vertical;
-        min-height: 150px;
-    }
-
-    .complaint-submit-btn {
-        padding: 14px;
-        border: none;
-        border-radius: 50px;
-        font-weight: 700;
-        color: #fff;
-        background: linear-gradient(90deg, #ef4444, #ec4899);
-        transition: all 0.3s ease;
-    }
-
-    .complaint-submit-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
-        color: #fff;
-    }
-
-    .validation-message {
-        display: block;
-        margin-top: 6px;
-        font-size: 0.9rem;
-        color: #fb7185;
-    }
-
-    .field-validation-error {
-        color: #fb7185 !important;
-    }
-
-    .input-validation-error {
-        border-color: #fb7185 !important;
-        box-shadow: 0 0 0 3px rgba(251, 113, 133, 0.2);
-    }
-
-    @@keyframes complaintFadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(25px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @@media (max-width: 576px) {
-        .complaint-card {
-            padding: 30px 20px;
-        }
-    }
-</style>
+</div>

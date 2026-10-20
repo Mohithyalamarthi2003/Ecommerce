@@ -1,10 +1,12 @@
+using Ecommerce.Data;
 using Ecommerce.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using Ecommerce.Data;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Security.Claims;
 
 
 namespace Ecommerce.Controllers
@@ -40,26 +42,75 @@ namespace Ecommerce.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+
         [Authorize]
         [HttpGet]
-        public async Task <IActionResult> Complaint()
+        public async Task<IActionResult> Complaint()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
+            var complaints = await _context.Complaints
+       .Where(c => c.UserId == userId)
+       .OrderByDescending(c => c.CreatedAt)
+       .ToListAsync();
+
+            if (complaints != null)
+            {
+                return View(complaints);
+            }
+
+            return RedirectToAction("NewComplaint", "Home");
+            
+               
+            
+            
+        }
+
+        [Authorize]
+        
+
+        public IActionResult NewComplaint()
         {
             return View();
         }
-
+        [Authorize]
         [HttpPost]
-
-        public async Task <IActionResult> Complaint(Complaint model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Complaint(Complaint model)
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            if(userId==null)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
             {
-                return NotFound();
+                return Unauthorized();
             }
-            model.CreatedAt = DateTime.Now;
+
+            // These values must come from the logged-in user/server,
+            // not from values posted by the browser.
+            model.UserId = userId;
+            model.CreatedAt = DateTime.UtcNow;
+
+            
+
+            if (!ModelState.IsValid)
+            {
+                var complaints = await _context.Complaints
+                    .Where(c => c.UserId == userId)
+                    .OrderByDescending(c => c.CreatedAt)
+                    .ToListAsync();
+
+                return View(complaints);
+            }
+
             _context.Complaints.Add(model);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index","Home");
+
+            return RedirectToAction(nameof(Complaint));
         }
 
         public IActionResult Guide()
