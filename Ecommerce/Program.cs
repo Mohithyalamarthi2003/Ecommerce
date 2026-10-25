@@ -22,10 +22,6 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 
 var app = builder.Build();
 
-// ROLE CREATION DISABLED FOR NOW
-// We'll enable it again after fixing database hosting.
-
-/*
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider
@@ -56,7 +52,7 @@ using (var scope = app.Services.CreateScope())
         }
     }
 }
-*/
+
 
 if (!app.Environment.IsDevelopment())
 {
