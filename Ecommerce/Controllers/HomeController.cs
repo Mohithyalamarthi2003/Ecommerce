@@ -78,6 +78,8 @@ namespace Ecommerce.Controllers
         {
             return View();
         }
+
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -112,6 +114,83 @@ namespace Ecommerce.Controllers
 
             return RedirectToAction(nameof(Complaint));
         }
+
+        //giving the editing feature for the complaints module 
+
+       
+
+       
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> EditComplaint(int id)
+        {
+            var currentUserId =
+                User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
+
+            var complaint =
+                await _context.Complaints
+                .FirstOrDefaultAsync(x =>
+                    x.Id == id &&
+                    x.UserId == currentUserId);
+
+            if (complaint == null)
+            {
+                return NotFound();
+            }
+
+            return View(complaint);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditComplaint(Complaint model)
+        {
+            var complaint = await _context.Complaints
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
+
+            if (complaint == null)
+            {
+                return NotFound();
+            }
+
+            complaint.Email = model.Email;
+            complaint.Subject = model.Subject;
+            complaint.Description = model.Description;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Complaint");
+        }
+
+
+
+        //controller for deleting the complaint 
+
+        [HttpGet]
+        public async Task <IActionResult> DeleteComplaint(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var complaint = await _context.Complaints.FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId);
+                if(complaint==null)
+            {
+                return NotFound();
+            }
+                return View(complaint);
+        }
+
+        [HttpPost]
+
+        public async Task <IActionResult> DeleteComplaint(Complaint model)
+        {
+            var complaint =  _context.Complaints.FirstOrDefault(x => x.Id == model.Id);
+            _context.Complaints.Remove(complaint);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Complaint");
+        }
+
+
+        //the field which is returning the guide view with the html code 
 
         public IActionResult Guide()
         {

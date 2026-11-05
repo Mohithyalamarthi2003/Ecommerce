@@ -18,6 +18,8 @@
                         <th>Description</th>
                         <th>Email</th>
                         <th>Created At</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
 
@@ -29,6 +31,15 @@
                             <td>@complaint.Description</td>
                             <td>@complaint.Email</td>
                             <td>@complaint.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")</td>
+                            <td>   <form asp-action="Editcomplaint" method="get" asp-route-id="@complaint.Id">
+                                    <button class="bi bi-pencil-fill border-0 border-white"></button>
+                                    </form>
+                            </td>
+                            <td>   <form asp-action="Deletecomplaint" method="get" asp-route-id="@complaint.Id">
+                                    <button class="bi bi-archive-fill border-0 border-white"></button>
+                                    </form>
+                            </td>
+                          
                         </tr>
 
                     
