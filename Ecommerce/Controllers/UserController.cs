@@ -13,7 +13,11 @@ namespace Ecommerce.Controllers
         }
         public async Task <IActionResult> Index()
         {
+
+           
             var product =  _context.Products.ToList();
+
+          
             return View(product);
         }
     }

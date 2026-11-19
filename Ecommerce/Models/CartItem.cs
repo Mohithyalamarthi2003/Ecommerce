@@ -15,6 +15,8 @@ namespace Ecommerce.Models
         [Range(1, 100)]
         public int Quantity { get; set; }
 
+        public int AvailableQuantity { get; set; }
+
         public Product? Product { get; set; }
     }
 }

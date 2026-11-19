@@ -1,5 +1,25 @@
 ﻿@model IEnumerable<Product>
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+}
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
 <div class="container">
     <div class="row">
 
@@ -11,44 +31,46 @@
                     <img src="@item.ImageUrl"
                          class="img-fluid rounded"
                          alt="@item.Name"
-                         style="width: 100%; height: 200px; object-fit: contain; background-color: white;" />
+                         style="width:100%;height:200px;object-fit:contain;background-color:white;" />
 
                     <div class="card-body">
-                        <h5 class="card-title fw-bolder">@item.Name</h5>
-                        <p class="card-text">@item.Description</p>
+
+                        <h5 class="card-title fw-bolder">
+                            @item.Name
+                        </h5>
+
+                        <p class="card-text">
+                            @item.Description
+                        </p>
 
                         <p>
                             <strong class="text-success">
-                                Available: @item.AvailableQuantity
+                                Available Quantity : @item.AvailableQuantity
                             </strong>
                         </p>
 
                         <p>
                             <strong class="text-warning">
-                                Price: @item.Price.ToString("C")
+                                Price : @item.Price.ToString("C")
                             </strong>
                         </p>
-      <form asp-controller="AddToCart"
-      asp-action="Cart"
-      method="post">
 
-    @Html.AntiForgeryToken()
+                        <form asp-controller="AddToCart"
+                              asp-action="Cart"
+                              method="post">
 
-    <input type="hidden" name="id" value="@item.Id" />
+                            @Html.AntiForgeryToken()
 
-    <button type="submit" class="btn btn-primary">Add To Cart</button>
- <button type="submit" class="btn btn-primary">Buy Now</button>
-</form>
-   
+                            <input type="hidden"
+                                   name="id"
+                                   value="@item.Id" />
 
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Add To Cart
+                            </button>
+                        </form>
 
-                        @* <a class="btn btn-warning btn-sm mx-2" asp-action="Edit" asp-route-id="@item.Id">
-                            <i class="bi bi-pencil-square"></i>
-                        </a>
-
-                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">
-                            <i class="bi bi-trash"></i>
-                        </a> *@
                     </div>
 
                 </div>

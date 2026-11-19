@@ -8,6 +8,8 @@
 
         public decimal Unitprice { get; set; }
 
+        public int AvailableQuantity { get; set; }
+
         public int Quantity { get; set; }
 
         public decimal total => Unitprice * Quantity;

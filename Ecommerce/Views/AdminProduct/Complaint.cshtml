@@ -39,6 +39,7 @@
                                 <th scope="col">Problem Title</th>
                                 <th scope="col">Problem Description</th>
                                 <th scope="col" class="pe-4">Created At</th>
+                                <th scope="col">Admin Comments</th>
                             </tr>
                         </thead>
 
@@ -56,6 +57,10 @@
                                     </td>
                                     <td class="pe-4 text-nowrap">
                                         @complaint.CreatedAt.ToString("dd MMM yyyy, HH:mm")
+                                    </td>
+                                    
+                                    <td>
+                                        <input type="text" placeholder="Comments" class="form-control form-text"/>
                                     </td>
                                 </tr>
                             }

@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<CartItem>
 
+@if (TempData["Error"] != null) { }
+
 <div class="container py-4">
     <h2 class="fw-bolder text-center text-decoration-underline mb-4">
         Welcome to the View Cart
@@ -80,9 +82,9 @@
                                            name="quantity"
                                            value="@item.Quantity"
                                            min="1"
-                                           max="100"
+                                           @* max="@item.AvailableQuantity" *@
                                            class="form-control text-center"
-                                           style="width: 85px;" />
+                                           style="width: 85px;" asp-route-id="@item.AvailableQuantity"/>
 
                                     <button type="submit"
                                             class="btn btn-sm btn-outline-primary" asp-action="Update" asp-controller="AddToCart" asp-route-id="@item.Id">
@@ -140,11 +142,19 @@
                 <i class="bi bi-arrow-left me-1"></i> Continue Shopping
             </a>
 
-            <a asp-controller="Order"
-               asp-action="Checkout"
-               class="btn btn-success btn-lg">
-                <i class="bi bi-credit-card me-1"></i> Proceed to Checkout
-            </a>
+           <form asp-controller="Order"
+      asp-action="PlaceOrder"
+      method="post">
+
+    <button type="submit"
+            class="btn btn-success btn-lg">
+        <i class="bi bi-credit-card me-1"></i>
+        Proceed to Checkout
+    </button>
+
+</form>
+               
+            
         </div>
     }
 </div>

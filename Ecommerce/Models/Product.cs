@@ -20,8 +20,13 @@ namespace Ecommerce.Models
 
         public string ImageUrl { get; set; } = "";
 
+        //public DateTime CreatedAt { get; set; } 
+
+
         [NotMapped]
         public IFormFile ? Image { get; set; } 
+
+
 
     }
 }

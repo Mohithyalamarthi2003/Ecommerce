@@ -1,8 +1,14 @@
+using Ecommerce.Controllers;
 using Ecommerce.Data;
-using Microsoft.EntityFrameworkCore;
+using Ecommerce.Services;
+using Ecommerce.Services.Interface;
+using Ecommerce.Services.Implementation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Ecommerce.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +23,43 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
-    .AddCookie();
+//builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+//    .AddCookie();
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
 
+                ValidIssuer =
+                    builder.Configuration["Jwt:Issuer"],
+
+                ValidateAudience = true,
+
+                ValidAudience =
+                    builder.Configuration["Jwt:Audience"],
+
+                ValidateLifetime = true,
+
+                ValidateIssuerSigningKey = true,
+
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(
+                        builder.Configuration["Jwt:SecretKey"]!
+                    )
+                ),
+
+                ClockSkew = TimeSpan.Zero
+            };
+    });
+
+builder.Services.AddScoped<IProductView, ProductView>();
+builder.Services.AddScoped<ISingleproduct, Singleproduct>();
+builder.Services.AddScoped<IProductEdit, ProductEdit>();
+builder.Services.AddScoped<Jwtservice>();
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
