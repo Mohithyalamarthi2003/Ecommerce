@@ -59,6 +59,8 @@ builder.Services
 builder.Services.AddScoped<IProductView, ProductView>();
 builder.Services.AddScoped<ISingleproduct, Singleproduct>();
 builder.Services.AddScoped<IProductEdit, ProductEdit>();
+builder.Services.AddScoped<IProductDelete, ProductDelete>();
+builder.Services.AddScoped<ICreateProduct, createProduct>();
 builder.Services.AddScoped<Jwtservice>();
 var app = builder.Build();
 

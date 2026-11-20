@@ -13,7 +13,7 @@ namespace Ecommerce.Services.Implementation
             _context = context;
         }
 
-        public async Task<ProductUpdateDto?> EditProduct(int id, ProductUpdateDto dto)
+        public async Task<ProductUpdateDto>EditProduct(int id, ProductUpdateDto dto)
         {
             var product = await _context.Products.FindAsync(id);
 

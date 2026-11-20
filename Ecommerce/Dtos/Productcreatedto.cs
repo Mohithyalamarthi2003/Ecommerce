@@ -8,7 +8,9 @@
 
         public int AvailableQuantity { get; set; }
 
-        public int price { get; set; } 
+        public int price { get; set; }
+
+        public IFormFile ? Image { get; set; } 
 
     }
 }
