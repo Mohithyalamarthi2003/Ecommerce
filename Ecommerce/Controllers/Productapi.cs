@@ -4,6 +4,9 @@ using Ecommerce.Services.Implementation;
 using Ecommerce.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Ecommerce.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ecommerce.Controllers
 {
@@ -21,7 +24,15 @@ namespace Ecommerce.Controllers
 
         private readonly IProductDelete _productdelete;
 
-        public Productapi(ApplicationDbContext context, IProductView productview, ICreateProduct createproduct, IProductEdit productedit, ISingleproduct singleproduct, IProductDelete productdelete)
+        private readonly IJwtService _jwtService;
+
+        private readonly ILogin _Login;
+
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private object _userManger;
+
+        public Productapi(ApplicationDbContext context, IProductView productview, ICreateProduct createproduct, IProductEdit productedit, ISingleproduct singleproduct, IProductDelete productdelete, IJwtService jwtService, ILogin login, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _productview = productview;
@@ -29,8 +40,13 @@ namespace Ecommerce.Controllers
             _productedit = productedit;
             _singleproduct = singleproduct;
             _productdelete = productdelete;
-        }
+            _jwtService = jwtService;
+            _Login = login;
+            _userManager = userManager;
+            _signInManager = signInManager;
 
+        }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
@@ -68,11 +84,28 @@ namespace Ecommerce.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> CreateProduct([FromForm]Productcreatedto dto)
+        public async Task<IActionResult> CreateProduct([FromForm] Productcreatedto dto)
         {
             var product = await _createproduct.CreateProduct(dto);
             return Ok(product);
         }
-        
+
+
+        //Testing the login functionality with the jwt token 
+
+        [HttpPost("login")]
+
+        public async Task<IActionResult> Login(LoginModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var result = await _Login.login(model.Email, model.Password);
+
+            var token =  _jwtService.GenerateToken(user);
+            return Ok(new { Token = token });  
+        }
+
+
+
+
     }
 }

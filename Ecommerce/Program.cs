@@ -23,45 +23,49 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-//builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+//builder.Services.AddAuthentication()
 //    .AddCookie();
+var key = builder.Configuration["Jwt:Key"]
+    ?? throw new InvalidOperationException("JWT Key is missing.");
+
+var keyBytes = Encoding.UTF8.GetBytes(key);
+
+
 builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+    .AddAuthentication(options =>
     {
-        options.TokenValidationParameters =
-            new TokenValidationParameters
-            {
-                ValidateIssuer = true,
+        options.DefaultAuthenticateScheme =
+            JwtBearerDefaults.AuthenticationScheme;
 
-                ValidIssuer =
-                    builder.Configuration["Jwt:Issuer"],
+        options.DefaultChallengeScheme =
+            JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(options =>
+{
+    //byte[] keyBytes = null;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
 
-                ValidateAudience = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
 
-                ValidAudience =
-                    builder.Configuration["Jwt:Audience"],
+        ClockSkew = TimeSpan.Zero  
+    };
+});
 
-                ValidateLifetime = true,
-
-                ValidateIssuerSigningKey = true,
-
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(
-                        builder.Configuration["Jwt:SecretKey"]!
-                    )
-                ),
-
-                ClockSkew = TimeSpan.Zero
-            };
-    });
 
 builder.Services.AddScoped<IProductView, ProductView>();
 builder.Services.AddScoped<ISingleproduct, Singleproduct>();
 builder.Services.AddScoped<IProductEdit, ProductEdit>();
 builder.Services.AddScoped<IProductDelete, ProductDelete>();
 builder.Services.AddScoped<ICreateProduct, createProduct>();
-builder.Services.AddScoped<Jwtservice>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<ILogin, Login>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -114,5 +118,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+
+app.MapGet("/hello", () =>
+{
+    return "Hello world";
+});
 
 app.Run();
