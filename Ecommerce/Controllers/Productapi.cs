@@ -93,15 +93,40 @@ namespace Ecommerce.Controllers
 
         //Testing the login functionality with the jwt token 
 
+
+        
+
         [HttpPost("login")]
 
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginDto dto)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            var result = await _Login.login(model.Email, model.Password);
+            var user = await _userManager.FindByEmailAsync(dto.Email);
+
+            if(user == null)
+            {
+                return Unauthorized(new LoginInResponseDto
+                {
+                    Success = false,
+                    Message = "Invalid Email or password",
+                    Token = null
+                });
+            }
+            var result = await _Login.login(dto.Email, dto.Password);
 
             var token =  _jwtService.GenerateToken(user);
-            return Ok(new { Token = token });  
+
+            return Ok(new LoginInResponseDto
+            {
+                Success = true,
+                Message = "Login Successfull",
+                Token = token,
+                User = new UserDto
+                {
+                    Id         = user.Id,
+                    UserName   = user.UserName ?? user.Email,
+                    Email      = user.Email ?? ""
+                }
+            });
         }
 
 
