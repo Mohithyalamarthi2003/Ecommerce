@@ -1,14 +1,16 @@
 using Ecommerce.Controllers;
 using Ecommerce.Data;
 using Ecommerce.Services;
-using Ecommerce.Services.Interface;
 using Ecommerce.Services.Implementation;
+using Ecommerce.Services.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +58,31 @@ builder.Services
         ClockSkew = TimeSpan.Zero  
     };
 });
+builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Ecommerce",
+        Version = "v1"
+    });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT Bearer Token"
+    });
+
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+    });
+}); 
 
 builder.Services.AddScoped<IProductView, ProductView>();
 builder.Services.AddScoped<ISingleproduct, Singleproduct>();
@@ -118,6 +144,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+app.UseSwagger();
+
+app.UseSwaggerUI(); 
 
 
 app.MapGet("/hello", () =>
