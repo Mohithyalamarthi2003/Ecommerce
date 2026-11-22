@@ -36,12 +36,19 @@ var keyBytes = Encoding.UTF8.GetBytes(key);
 builder.Services
     .AddAuthentication(options =>
     {
-        options.DefaultAuthenticateScheme =
-            JwtBearerDefaults.AuthenticationScheme;
-
-        options.DefaultChallengeScheme =
-            JwtBearerDefaults.AuthenticationScheme;
-    }).AddJwtBearer(options =>
+        options.DefaultAuthenticateScheme = "SmartScheme";
+        options.DefaultChallengeScheme = "SmartScheme";
+    })
+    .AddPolicyScheme("SmartScheme", null, options =>
+    {
+        options.ForwardDefaultSelector = context =>
+            context.Request.Headers.Authorization
+                .FirstOrDefault()?
+                .StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase) == true
+                ? JwtBearerDefaults.AuthenticationScheme
+                : IdentityConstants.ApplicationScheme;
+    })
+    .AddJwtBearer(options =>
 {
     //byte[] keyBytes = null;
     options.TokenValidationParameters = new TokenValidationParameters
@@ -82,7 +89,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         [new OpenApiSecuritySchemeReference("Bearer", document)] = []
     });
-}); 
+});
 
 builder.Services.AddScoped<IProductView, ProductView>();
 builder.Services.AddScoped<ISingleproduct, Singleproduct>();

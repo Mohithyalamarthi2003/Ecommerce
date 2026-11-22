@@ -67,15 +67,15 @@
                             </td>
 
                             <td class="text-center">
-                                <form asp-controller="Cart"
-                                      asp-action="UpdateQuantity"
+                                <form asp-controller="AddToCart"
+                                      asp-action="Update"
                                       method="post"
                                       class="d-flex justify-content-center align-items-center gap-2">
 
                                     @Html.AntiForgeryToken()
 
                                     <input type="hidden"
-                                           name="cartItemId"
+                                           name="id"
                                            value="@item.Id" />
 
                                     <input type="number"
@@ -84,10 +84,10 @@
                                            min="1"
                                            @* max="@item.AvailableQuantity" *@
                                            class="form-control text-center"
-                                           style="width: 85px;" asp-route-id="@item.AvailableQuantity"/>
+                                           style="width: 85px;" />
 
-                                    <button type="submit"
-                                            class="btn btn-sm btn-outline-primary" asp-action="Update" asp-controller="AddToCart" asp-route-id="@item.Id">
+                                     <button type="submit"
+                                             class="btn btn-sm btn-outline-primary">
                                         Update
                                     </button>
                                 </form>
@@ -98,7 +98,7 @@
                             </td>
 
                             <td class="text-center">
-                                <form asp-controller="Cart"
+                                <form asp-controller="AddToCart"
                                       asp-action="Remove"
                                       method="post"
                                       onsubmit="return confirm('Remove this item from your cart?');">
@@ -106,10 +106,10 @@
                                     @Html.AntiForgeryToken()
 
                                     <input type="hidden"
-                                           name="cartItemId"
+                                           name="id"
                                            value="@item.Id" />
 
-                                    <button type="submit" asp-action="Remove" asp-controller="AddToCart" asp-route-id="@item.Id"
+                                    <button type="submit"
                                             class="btn btn-sm btn-danger">
                                         <i class="bi bi-trash me-1"></i> Remove
                                     </button>
